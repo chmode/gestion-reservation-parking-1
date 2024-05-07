@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modifier le profil utilisateur</title>
+
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <h2 class="mb-4">Modifier le profil de l'utilisateur</h2>
+
+
+            <div class="alert alert-danger" role="alert" th:if="${param.phoneError}">
+                <span th:text="${phoneMessage}"></span>
+            </div>
+            <div class="alert alert-danger" role="alert" th:if="${param.emailError}">
+                <span th:text="${emailMessage}"></span>
+            </div>
+
+
+
+            <form th:action="@{'/user/profile/edit/' + ${userid}}" method="POST">
+                <div class="form-group">
+                    <label for="firstName">Prénom</label>
+                    <input type="text" class="form-control" id="firstName" name="firstName" th:value="${fullUser.idUser.firstName}" required>
+                </div>
+                <div class="form-group">
+                    <label for="lastName">Nom de famille</label>
+                    <input type="text" class="form-control" id="lastName" name="lastName" th:value="${fullUser.idUser.lastName}" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Téléphone</label>
+                    <input type="text" class="form-control" id="phone" name="phone" th:value="${fullUser.idUser.phone}" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" class="form-control" id="email" name="email" th:value="${fullUser.email}" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Mot de passe</label>
+                    <input type="password" class="form-control" id="password" name="password" th:value="${fullUser.password}" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Enregistrer les modifications</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

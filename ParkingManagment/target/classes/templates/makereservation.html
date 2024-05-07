@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page de réservation</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-5">
+    <h2>Effectuer une réservation</h2>
+    <form id="reservationForm" th:action="@{'/user/profile/reservation/s/' + ${userid}}" method="POST">
+        <div class="form-group">
+            <label for="dateIn">Date d'arrivée:</label>
+            <input type="datetime-local" id="dateIn" name="dateIn" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label for="dateOut">Date de départ:</label>
+            <input type="datetime-local" id="dateOut" name="dateOut" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label for="parking">Sélectionner un parking:</label>
+            <select id="parking" name="parking" class="form-control" required>
+                <option th:each="parking : ${parkingOptions}" th:value="${parking.idParking}" th:text="${parking.type}"></option>
+            </select>
+        </div>
+        <input type="hidden" id="parkingid" name="parking" th:value="${parkingid}">
+        <button type="button" onclick="convertDateTimeAndSubmit()" class="btn btn-primary">Rechercher</button>
+    </form>
+
+    <h2>Places disponibles de <span th:text="${dateInFromserver}"></span> à <span th:text="${dateOutFromserver}"></span></h2>
+
+    <table class="table">
+        <thead class="thead-dark">
+        <tr>
+            <th>Name</th>
+            <th>Prix</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="place : ${availablePlaces}">
+            <td th:text="${place.name}"></td>
+            <td th:text="'$' + ${place.price}"></td>
+            <td>
+                <form th:action="@{'/user/profile/reservation/validation'}" id="reservform" method="POST">
+                    <input type="hidden" name="userid" th:value="${userid}">
+                    <input type="hidden" name="parkingid" th:value="${parking}">
+                    <input type="hidden" name="placeId" th:value="${place.idPlace}">
+                    <input type="hidden" name="placeprice" th:value="${place.price}">
+                    <input type="hidden" id="reservdatein" name="vdatein" th:value="${dateInFromserver}">
+                    <input type="hidden" id="reservdateout" name="vdateout" th:value="${dateOutFromserver}">
+                    <button type="submit" class="btn btn-primary" onclick="keepDate()">Réserver</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+
+    function convertDateTimeAndSubmit() {
+        var dateInInput = document.getElementById("dateIn").value;
+        var dateOutInput = document.getElementById("dateOut").value;
+
+        if (!dateInInput || !dateOutInput) {
+            alert("Veuillez sélectionner à la fois Date d'entrée et Date de sortie.");
+            return;
+        }
+
+
+        var currentDate = new Date();
+        var selectedDateIn = new Date(dateInInput);
+        if (selectedDateIn < currentDate) {
+            alert("La date d'entrée doit être égale ou postérieure à la date actuelle.");
+            return;
+        }
+
+        if (dateOutInput <= dateInInput) {
+            alert("La date de sortie doit être postérieure à la date d'entrée.");
+            return;
+        }
+
+        /*var dateIn = dateInInput.replace("T", " ");
+        var dateOut = dateOutInput.replace("T", " ");
+        document.getElementById("dateIn").value = dateIn;
+        document.getElementById("dateOut").value = dateOut;*/
+        document.getElementById("reservationForm").submit();
+
+    }
+
+
+    function keepDate() {
+        var dateInInput = document.getElementById("reservdatein").value;
+        var dateOutInput = document.getElementById("reservdateout").value;
+
+       /* var dateIn = dateInInput.replace("T", " ");
+        var dateOut = dateOutInput.replace("T", " ");
+
+        document.getElementById("reservdatein").value = dateIn;
+        document.getElementById("reservdateout").value = dateOut;*/
+        document.getElementById("reservform").submit();
+    }
+
+</script>
+
+</body>
+</html>

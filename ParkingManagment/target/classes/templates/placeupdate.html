@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Mettre à jour l'endroit</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+    <h2>Mettre à jour l'endroit</h2>
+
+
+    <div class="alert alert-danger" role="alert" th:if="${param.error}">
+        <span th:text="${errorMessage}"></span>
+    </div>
+
+    <form th:action="@{'/places/updated/' + ${place.idPlace}}" method="POST">
+        <div class="form-group">
+            <label for="name">Nom</label>
+            <input type="text" class="form-control" id="name" name="name" th:value="${place.name}">
+        </div>
+        <div class="form-group">
+            <label for="price">Prix</label>
+            <input type="text" class="form-control" id="price" name="price" th:value="${place.price}">
+        </div>
+        <div class="form-group">
+            <label for="state">État</label>
+            <select class="form-control" id="state" name="state">
+                <option value="disponible" th:selected="${place.state == 'disponible'}">Disponible</option>
+                <option value="undisponible" th:selected="${place.state == 'undisponible'}">Undisponible</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Mettre à jour</button>
+    </form>
+</div>
+
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

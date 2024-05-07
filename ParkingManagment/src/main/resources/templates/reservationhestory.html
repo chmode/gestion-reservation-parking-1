@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Détails de réservation</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-5">
+    <h2>Détails de la réservation</h2>
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>Date d'arrivée</th>
+            <th>Date de départ</th>
+            <th>Parking</th>
+            <th>Nom de l'endroit</th>
+            <th>Durée</th>
+            <th>Prix</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="res : ${reservations}">
+            <td th:text="${res.reservation[0]}"></td>
+            <td th:text="${res.reservation[1]}"></td>
+            <td th:text="${res.reservation[3]}"></td>
+            <td th:text="${res.reservation[2].name}"></td>
+            <td th:text="${res.hours+'h' + ' : ' + res.minutes+'m'}"></td>
+            <td th:text="${res.reservation[4]}"></td>
+        </tr>
+
+        </tbody>
+    </table>
+
+</div>
+
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

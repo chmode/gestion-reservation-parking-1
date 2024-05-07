@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Parking détails </title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+    <h2>Sélectionner le parking</h2>
+    <form th:action="@{/parkings}" method="GET" class="form-inline">
+        <div class="form-group mr-2">
+            <select name="idparking" class="form-control" style="width: 200px;">
+                <option th:each="parking : ${parkings}"
+                        th:value="${parking.idParking}"
+                        th:text="${parking.type}"
+                        th:selected="${parking.idParking == selectedParkingId}"></option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary mr-2">Afficher les places</button>
+        <a href="/places/add" class="btn btn-success">Ajouter  place</a>
+    </form>
+
+    <h2>Places</h2>
+    <div class="container mt-5">
+        <h2>Détails de la réservation</h2>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Prix</th>
+                <th>État</th>
+                <th>Options</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="place : ${places}">
+                <td th:text="${place.name}"></td>
+                <td th:text="${place.price}"></td>
+                <td th:text="${place.state}"></td>
+                <td>
+                    <div class="btn-group">
+                        <a th:href="@{'/places/delete/' + ${place.idPlace}}" class="btn btn-danger">Supprimer</a>
+                        <a th:href="@{'/places/update/' + ${place.idPlace}}" class="btn btn-warning ml-1">Mettre à jour</a>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

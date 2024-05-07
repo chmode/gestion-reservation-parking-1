@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>AAjouter un nouveau place</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+    <h2>Add New Place</h2>
+    <form th:action="@{/places/add}" method="POST">
+        <div class="form-group">
+            <label for="parking">Sélectionnez  Parking</label>
+            <select id="parking" name="parkingId" class="form-control">
+                <option th:each="parking : ${parkings}" th:value="${parking.idParking}" th:text="${parking.type}"></option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="name">Nom</label>
+            <input type="text" class="form-control" id="name" name="name" required>
+        </div>
+        <div class="form-group">
+            <label for="price">Prix</label>
+            <input type="number" class="form-control" id="price" name="price" required>
+        </div>
+        <div class="form-group">
+            <label for="state">État</label>
+            <select id="state" name="state" class="form-control" required>
+                <option value="disponible">Disponible</option>
+                <option value="undisponible">Undisponible</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Ajouter un lace</button>
+    </form>
+    <div th:if="${errorMessage}" class="alert alert-danger mt-3" role="alert">
+        <span th:text="${errorMessage}"></span>
+    </div>
+</div>
+
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

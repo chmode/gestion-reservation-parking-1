@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profil utilisateur</title>
+
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <h2 class="mb-4">Profil utilisateur</h2>
+            <div class="card">
+                <div class="card-body">
+                    <div class="mb-3">
+                        <a th:href="@{'/user/profile/resarvation/f/' + ${userid}} " class="btn btn-primary btn-block">Make Reservation</a>
+                    </div>
+                    <div class="mb-3">
+                        <a th:href="@{'/user/profile/history/' + ${userid}}" class="btn btn-secondary btn-block">My Reservation History</a>
+                    </div>
+                    <div>
+                        <a th:href="@{'/user/profile/edit/' + ${userid}}" class="btn btn-info btn-block">Edit Profile</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>
